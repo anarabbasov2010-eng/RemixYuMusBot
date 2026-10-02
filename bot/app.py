@@ -203,7 +203,16 @@ async def give(m:Message):
         add_balance(int(p[1]),int(p[2])); await m.answer('✓ Баланс пополнен.')
 
 async def main():
-    if not BOT_TOKEN: raise RuntimeError('BOT_TOKEN is not set')
+    if not BOT_TOKEN:
+        raise RuntimeError('BOT_TOKEN is not set in Render Environment')
+    print('RemixYuMusBot: initializing...', flush=True)
     init()
     threading.Thread(target=start_health,daemon=True).start()
-    await dp.start_polling(bot)
+    try:
+        me = await bot.get_me()
+        print(f'RemixYuMusBot: Telegram connected as @{me.username}', flush=True)
+        print('RemixYuMusBot: polling started', flush=True)
+        await dp.start_polling(bot, handle_signals=False)
+    except Exception as e:
+        print(f'RemixYuMusBot STARTUP ERROR: {type(e).__name__}: {e}', flush=True)
+        raise
