@@ -3,7 +3,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv()
-BOT_TOKEN = os.getenv("BOT_TOKEN", "")
+BOT_TOKEN = os.getenv("BOT_TOKEN", "").strip()
 ADMIN_ID = int(os.getenv("ADMIN_ID", "8609012191"))
 ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "vvpse")
 DB_PATH = Path(os.getenv("DB_PATH", "/app/storage/remix.db"))
